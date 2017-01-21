@@ -65,19 +65,14 @@
 
     var data = bikeArrayClean;
 
-    /* =====================
+    var above20 = []
 
-    Start code to filter data
-
-    ===================== */
-
-
-
-    /* =====================
-
-    End code to filter data
-
-    ===================== */
+    for (i=0;i<data.length;i++) {
+      if (data[i][3]>20) {
+        above20.push(data[i]);
+      };
+    };
+    console.log(above20);
 
     var map = L.map('map', {
       center: [39.9522, -75.1639],
@@ -92,19 +87,9 @@
       ext: 'png'
     }).addTo(map);
 
-    /* =====================
-
-    Start code to add markers to map
-
-    ===================== */
-
-
-
-    /* =====================
-
-    End code to add markers to map
-
-    ===================== */
+    for (i=0;i<above20.length;i++) {
+      L.marker([above20[i][1],above20[i][0]]).addTo(map)
+    };
 
     </script>
   </body>

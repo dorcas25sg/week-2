@@ -48,7 +48,24 @@
        Remember: functions are meant to facilitate code comprehension and reuse. Try to use them to organize your code.
       ===================== */
 
-
+  var output_KEYS = ["LNG", "LAT", "OBJECTID", "NAME", "ORGANIZATION", "ZIP", "PHONE", "WEBSITE", "DENTAL_PHONE", "FULL_ADDRESS"];
+  var combined = [output_KEYS, [], [], [], [], [], [], [], [], [], []]
+  var getFields = function(input){
+    for (i=0; i<input.length;i++) {
+      combined[1].push(input[i]["LNG"]);
+      combined[2].push(input[i]["LAT"]);
+      combined[3].push(input[i]["OBJECTID"]);
+      combined[4].push(input[i]["NAME"]);
+      combined[5].push(input[i]["ORGANIZATION"]);
+      combined[6].push(input[i]["ZIP"]);
+      combined[7].push(input[i]["PHONE"]);
+      combined[8].push(input[i]["WEBSITE"]);
+      combined[9].push(input[i]["DENTAL_PHONE"]);
+      combined[10].push(input[i]["FULL_ADDRESS"]);
+    };
+  };
+  getFields(healthCenters);
+  console.log(combined)
       /* =====================
 
       Start code
@@ -57,18 +74,32 @@
 
       var jsonToCsv = function(json) { console.log(json); };
 
-
       var addMarkers = function(map) {};
 
+//adding markers for those in zip code 19140-49 (inclusive)
+//Extra: if health center has dental, the blue marker will have a green background
+for (i=0;i<combined[1].length;i++) {
+  if (combined[6][i] >= 19140 && combined[6][i] <= 19149 ) {
+    if (combined[9][i] === "N/A") {
+      L.marker([combined[2][i],combined[1][i]]).addTo(map)
+      .bindPopup(combined[4][i]).openPopup();
+    }
+    else {
+      var marker = L.marker([combined[2][i],combined[1][i]]).addTo(map)
+        .bindPopup(combined[4][i]).openPopup();
+        marker.valueOf()._icon.style.backgroundColor = 'green'; //or any color
+      };
+    };
+  };
       /* =====================
 
       End code
 
       ===================== */
 
-
       jsonToCsv(healthCenters);
       addMarkers(map);
+
     </script>
     <!--Your code ends here-->
   </body>
